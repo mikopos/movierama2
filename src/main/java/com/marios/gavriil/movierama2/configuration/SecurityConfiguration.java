@@ -19,7 +19,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure (HttpSecurity http) throws Exception {
-            http.authorizeRequests()
+            http
+                    .authorizeRequests()
+
+                    /***** To be deleted in production ****/
+                    .antMatchers("/h2-console/**")
+                    .permitAll()
+                    .antMatchers("/")
+                    .permitAll()
+                    .and()
+                    .authorizeRequests()
+                    /********************************/
                     .anyRequest()
                     .authenticated()
                     .and()
@@ -32,6 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login");
+
+            http.csrf().disable();
+            http.headers().frameOptions().disable();
         }
 
     @Autowired
@@ -47,7 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser(User.withUsername("user")
                         .password(passwordEncoder().encode("pass"))
                         .roles("USER"));
-
     }
 
     @Bean
