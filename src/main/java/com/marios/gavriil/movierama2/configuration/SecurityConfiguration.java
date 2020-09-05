@@ -27,6 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .antMatchers("/")
                     .permitAll()
+                    .antMatchers("/user/registration")
+                    .permitAll()
                     .and()
                     .authorizeRequests()
                     /********************************/
@@ -54,12 +56,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
 
-        auth.jdbcAuthentication()
+        auth
+                .jdbcAuthentication()
+                .passwordEncoder(passwordEncoder())
                 .dataSource(dataSource)
-                .withDefaultSchema()
-                .withUser(User.withUsername("user")
-                        .password(passwordEncoder().encode("pass"))
-                        .roles("USER"));
+                .usersByUsernameQuery("select username, password, enabled from user where username=?")
+                .authoritiesByUsernameQuery("select username, role from user where username=?");
+
     }
 
     @Bean
