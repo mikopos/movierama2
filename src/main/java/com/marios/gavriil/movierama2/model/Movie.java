@@ -3,38 +3,40 @@ package com.marios.gavriil.movierama2.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "movie")
+@Table
 public class Movie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column
     private Long id;
 
-    @Column(name="title")
+    @Column
     private String title;
 
-    @Column(name="description")
+    @Column
     private String description;
 
     @ManyToOne
     private User user;
 
-    @Column(name="publicationDate")
-    private Date publicationDate;
+    @Column
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate publicationDate;
 
-    @Column(name="numberOfLikes")
+    @Column
     private Integer numberOfLikes;
 
-    @Column(name="numberOfHates")
+    @Column
     private Integer numberOfHates;
 }

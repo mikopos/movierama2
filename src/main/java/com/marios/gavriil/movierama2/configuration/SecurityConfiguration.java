@@ -40,6 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .successForwardUrl("/index")
                     .and()
+                    .httpBasic()
+                    .and()
                     .logout()
                     .permitAll()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

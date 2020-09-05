@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -15,6 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public User registerUserAccount(UserDto userDto) {
 
         User user = new User();
@@ -26,5 +29,10 @@ public class UserServiceImpl implements UserService {
         user.setRole("ROLE_USER");
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User loadUserDetails(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }

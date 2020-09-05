@@ -1,11 +1,9 @@
 package com.marios.gavriil.movierama2.repositories;
 
-import com.marios.gavriil.movierama2.model.User;
+import com.marios.gavriil.movierama2.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    User findUserByUsername(String username);
+public interface MovieRepository extends JpaRepository<Movie,Long> {
 }

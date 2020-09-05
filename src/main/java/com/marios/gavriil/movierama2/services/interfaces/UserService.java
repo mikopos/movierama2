@@ -6,5 +6,6 @@ import com.marios.gavriil.movierama2.model.User;
 
 public interface UserService {
 
-    public User registerUserAccount(UserDto userDto);
+    User registerUserAccount(UserDto userDto);
+    User loadUserDetails (String username);
 }
