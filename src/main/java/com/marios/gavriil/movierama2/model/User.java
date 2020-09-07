@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,4 +38,7 @@ public class User implements Serializable {
 
     @Column
     private Boolean enabled;
+
+    @OneToMany(mappedBy = "user")
+    Set<MovieRating> votes;
 }

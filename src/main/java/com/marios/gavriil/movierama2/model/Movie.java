@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,4 +40,7 @@ public class Movie implements Serializable {
 
     @Column
     private Integer numberOfHates;
+
+    @OneToMany(mappedBy = "movie")
+    Set<MovieRating> votes;
 }

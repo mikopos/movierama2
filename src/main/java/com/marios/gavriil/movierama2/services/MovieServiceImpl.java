@@ -2,7 +2,6 @@ package com.marios.gavriil.movierama2.services;
 
 import com.marios.gavriil.movierama2.dto.MovieDto;
 import com.marios.gavriil.movierama2.model.Movie;
-import com.marios.gavriil.movierama2.model.User;
 import com.marios.gavriil.movierama2.repositories.MovieRepository;
 import com.marios.gavriil.movierama2.services.interfaces.MovieService;
 import com.marios.gavriil.movierama2.services.interfaces.UserService;
@@ -10,6 +9,8 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -38,5 +39,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie voteMovie(MovieDto movieDto, boolean vote) {
         return null;
+    }
+
+    @Override
+    public Optional<Movie> findById(Long id) {
+        return movieRepository.findById(id);
     }
 }

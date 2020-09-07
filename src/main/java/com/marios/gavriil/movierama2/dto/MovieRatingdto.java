@@ -1,27 +1,26 @@
 package com.marios.gavriil.movierama2.dto;
 
+import com.marios.gavriil.movierama2.model.Movie;
 import com.marios.gavriil.movierama2.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Getter
 @Setter
-public class MovieDto {
+public class MovieRatingdto {
 
     @NotNull
     @NotEmpty
-    private String title;
-
-    @NotNull
-    @NotEmpty
-    private String description;
-
     private User user;
-    private Date publicationDate;
-    private Integer numberOfLikes;
-    private Integer numberOfHates;
+
+    @NotNull
+    @NotEmpty
+    private Movie movie;
+
+    @NotNull
+    @NotEmpty
+    private boolean vote;
 }
