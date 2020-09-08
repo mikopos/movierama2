@@ -6,6 +6,7 @@ import com.marios.gavriil.movierama2.repositories.MovieRepository;
 import com.marios.gavriil.movierama2.services.interfaces.MovieService;
 import com.marios.gavriil.movierama2.services.interfaces.UserService;
 import org.joda.time.LocalDate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -37,8 +41,23 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie voteMovie(MovieDto movieDto, boolean vote) {
-        return null;
+    @Transactional
+    public Movie updateMovie(Long movieId, MovieDto movieDto) throws Exception {
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+        Movie movie;
+
+        if(optionalMovie.isPresent()){
+            movie = optionalMovie.get();
+
+            movie.setTitle(movieDto.getTitle());
+            movie.setDescription(movieDto.getDescription());
+            movie.setNumberOfLikes(movieDto.getNumberOfLikes());
+            movie.setNumberOfHates(movieDto.getNumberOfHates());
+        }
+        else{
+            throw new Exception("Movie not found");
+        }
+        return movieRepository.save(movie);
     }
 
     @Override

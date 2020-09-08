@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface MovieService {
 
     Movie addMovie(MovieDto movieDto);
-    Movie voteMovie(MovieDto movieDto, boolean vote);
+    Movie updateMovie(Long movieId, MovieDto movieDto) throws Exception;
     Optional<Movie> findById(Long id);
 }

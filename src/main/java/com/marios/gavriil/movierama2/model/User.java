@@ -1,12 +1,14 @@
 package com.marios.gavriil.movierama2.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -40,5 +42,6 @@ public class User implements Serializable {
     private Boolean enabled;
 
     @OneToMany(mappedBy = "user")
-    Set<MovieRating> votes;
+    @JsonIgnore
+    Set<MovieRating> votes = new HashSet<>();
 }

@@ -59,7 +59,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
                    }
 
                    try{
-                       movieService.addMovie(movieDto);
+                       movieService.updateMovie(optionalMovie.get().getId(),movieDto);
                    }catch (PersistenceException e){
                        throw new Exception("Something went wrong");
                    }
@@ -83,7 +83,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
                        }
 
                        try{
-                           movieService.addMovie(movieDto);
+                           movieService.updateMovie(optionalMovie.get().getId(), movieDto);
                        }catch (PersistenceException e){
                            throw new Exception("Something went wrong");
                        }

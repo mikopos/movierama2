@@ -21,8 +21,4 @@ public class MovieController {
         return movieService.addMovie(movieDto);
     }
 
-    @PostMapping(value = "movie/voteMovie")
-    public Movie voteMovie(@RequestBody MovieDto movieDto, boolean vote){
-        return movieService.voteMovie(movieDto, vote);
-    }
 }

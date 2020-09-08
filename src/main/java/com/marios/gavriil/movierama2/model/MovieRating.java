@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class MovieRating implements Serializable {
 
     @EmbeddedId
-    MovieRatingKey id;
+    MovieRatingKey id = new MovieRatingKey();
 
     @ManyToOne
     @MapsId("userId")

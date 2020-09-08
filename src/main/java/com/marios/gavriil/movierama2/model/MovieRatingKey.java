@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Embeddable
@@ -14,9 +15,11 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class MovieRatingKey implements Serializable {
 
-    @Column
+    @Column(name = "user_id")
+    @NotNull
     private Long userId;
 
-    @Column
+    @Column(name = "movie_id")
+    @NotNull
     private Long movieId;
 }
