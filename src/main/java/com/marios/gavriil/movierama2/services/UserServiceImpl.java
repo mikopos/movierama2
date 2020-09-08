@@ -1,6 +1,7 @@
 package com.marios.gavriil.movierama2.services;
 
 import com.marios.gavriil.movierama2.dto.UserDto;
+import com.marios.gavriil.movierama2.exceptions.UserAlreadyExistsException;
 import com.marios.gavriil.movierama2.model.User;
 import com.marios.gavriil.movierama2.repositories.UserRepository;
 import com.marios.gavriil.movierama2.services.interfaces.UserService;
@@ -18,7 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User registerUserAccount(UserDto userDto) {
+    public User registerUserAccount(UserDto userDto) throws Exception {
+
+        if(userRepository.findUserByUsername(userDto.getUsername()) != null){
+            throw new UserAlreadyExistsException("User already exists");
+        }
 
         User user = new User();
         user.setUsername(userDto.getUsername());

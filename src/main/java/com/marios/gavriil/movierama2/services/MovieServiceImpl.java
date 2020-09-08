@@ -1,6 +1,7 @@
 package com.marios.gavriil.movierama2.services;
 
 import com.marios.gavriil.movierama2.dto.MovieDto;
+import com.marios.gavriil.movierama2.exceptions.MovieNotExistException;
 import com.marios.gavriil.movierama2.model.Movie;
 import com.marios.gavriil.movierama2.repositories.MovieRepository;
 import com.marios.gavriil.movierama2.services.interfaces.MovieService;
@@ -55,7 +56,7 @@ public class MovieServiceImpl implements MovieService {
             movie.setNumberOfHates(movieDto.getNumberOfHates());
         }
         else{
-            throw new Exception("Movie not found");
+            throw new MovieNotExistException("Movie not found");
         }
         return movieRepository.save(movie);
     }

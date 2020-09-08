@@ -1,6 +1,6 @@
 package com.marios.gavriil.movierama2.controllers;
 
-import com.marios.gavriil.movierama2.dto.MovieRatingdto;
+import com.marios.gavriil.movierama2.dto.MovieRatingDto;
 import com.marios.gavriil.movierama2.model.MovieRating;
 import com.marios.gavriil.movierama2.services.interfaces.MovieRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MovieRatingController {
     MovieRatingService movieRatingService;
 
     @PostMapping("/vote/movie")
-    public MovieRating voteForMovie (@RequestBody @Valid MovieRatingdto movieRatingdto) throws Exception {
+    public MovieRating voteForMovie (@RequestBody @Valid MovieRatingDto movieRatingdto) throws Exception {
         return movieRatingService.voteForMovie(movieRatingdto);
     }
 }

@@ -6,6 +6,6 @@ import com.marios.gavriil.movierama2.model.User;
 
 public interface UserService {
 
-    User registerUserAccount(UserDto userDto);
+    User registerUserAccount(UserDto userDto) throws Exception;
     User loadUserDetails (String username);
 }

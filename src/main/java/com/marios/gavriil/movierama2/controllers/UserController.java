@@ -17,7 +17,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/user/registration")
-    public User registerUserAccount (@Valid @RequestBody UserDto userDto){
+    public User registerUserAccount (@Valid @RequestBody UserDto userDto) throws Exception {
         return userService.registerUserAccount(userDto);
     }
 }

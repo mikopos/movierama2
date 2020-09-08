@@ -1,7 +1,10 @@
 package com.marios.gavriil.movierama2.services;
 
 import com.marios.gavriil.movierama2.dto.MovieDto;
-import com.marios.gavriil.movierama2.dto.MovieRatingdto;
+import com.marios.gavriil.movierama2.dto.MovieRatingDto;
+import com.marios.gavriil.movierama2.exceptions.MovieNotExistException;
+import com.marios.gavriil.movierama2.exceptions.SameVoteException;
+import com.marios.gavriil.movierama2.exceptions.SameVoterAndCreatorException;
 import com.marios.gavriil.movierama2.model.Movie;
 import com.marios.gavriil.movierama2.model.MovieRating;
 import com.marios.gavriil.movierama2.repositories.MovieRatingRepository;
@@ -29,7 +32,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
 
     @Override
     @Transactional
-    public MovieRating voteForMovie(MovieRatingdto movieRatingdto) throws Exception {
+    public MovieRating voteForMovie(MovieRatingDto movieRatingdto) throws Exception {
 
         MovieRating movieRating = new MovieRating();
 
@@ -38,8 +41,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
 
        if(optionalMovie.isPresent()){
            if(movieRatingdto.getUser().getId() == optionalMovie.get().getUser().getId()){
-               //TODO owner movie exception
-               throw new Exception("The user cannot vote for this movie");
+               throw new SameVoterAndCreatorException("The user cannot vote for this movie");
            }
            else{
 
@@ -66,7 +68,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
                }
                else{
                    if (movieRatingdto.isVote() == tempMovieRating.isVote()){
-                       throw new Exception("You can not vote a movie with the same vote ");
+                       throw new SameVoteException("You can not vote a movie with the same vote ");
                    }
                    else{
                        movieRating.setUser(movieRatingdto.getUser());
@@ -94,8 +96,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
            }
        }
        else {
-           //TODO movie not exist exception
-           throw new Exception("There is no such movie");
+           throw new MovieNotExistException("There is no such movie");
        }
 
         return movieRatingRepository.save(movieRating);
