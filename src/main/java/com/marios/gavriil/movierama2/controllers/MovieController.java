@@ -4,7 +4,6 @@ import com.marios.gavriil.movierama2.dto.MovieDto;
 import com.marios.gavriil.movierama2.model.Movie;
 import com.marios.gavriil.movierama2.services.interfaces.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 public class MovieController {
 
     @Autowired
     MovieService movieService;
 
     @PostMapping(value = "/movie/addMovie")
-    public String addMovie(@Valid MovieDto movieDto, Model model){
-        model.addAttribute("movie", movieService.addMovie(movieDto));
-        return "redirect:/index";
+    public Movie addMovie(@Valid MovieDto movieDto, Model model){
+        return movieService.addMovie(movieDto);
     }
 
     @GetMapping(value = "/movie/findAllMovies")

@@ -21,10 +21,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         protected void configure (HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-
-                    /***** To be deleted in production ****/
-                    .antMatchers("/h2-console/**")
-                    .permitAll()
                     .antMatchers("/")
                     .permitAll()
                     .antMatchers("/user/registration")
@@ -33,7 +29,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                     .authorizeRequests()
-                    /********************************/
                     .anyRequest()
                     .authenticated()
                     .and()

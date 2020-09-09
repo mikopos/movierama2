@@ -21,8 +21,16 @@ Create mySQL database with name 'movierama'
 ```mvn springboot:run -Dspring-boot.run.profiles=dev```
 * Open browser and navigate to ```http:\\localhost:8081```
 
+###Testing with Postman
+
+
 ###Built With
 * Java 8
 * Springboot 2
 * MySQL
 * Thymeleaf
+
+###Github repo code
+```https://github.com/mikopos/movierama2/```
+###Deployed on Heroku
+```https://movierama2.herokuapp.com/```
