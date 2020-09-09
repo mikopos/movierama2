@@ -10,11 +10,14 @@ import com.marios.gavriil.movierama2.services.interfaces.UserService;
 import org.joda.time.LocalDate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -31,18 +34,27 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     ModelMapper modelMapper;
 
+   @Autowired
+   private Environment environment;
+
     @Override
     @Transactional
     public Movie addMovie(MovieDto movieDto) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
 
         Movie movie = new Movie();
         movie.setTitle(movieDto.getTitle());
         movie.setDescription(movieDto.getDescription());
         movie.setPublicationDate(new LocalDate());
+
+        if(Arrays.asList(environment.getActiveProfiles()).contains("test")){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
         movie.setUser(userService.loadUserDetails(currentPrincipalName));
+        }
+        else{
+        movie.setUser(userService.loadUserDetails(movieDto.getUser().getUsername()));
+        }
+
         movie.setNumberOfLikes(0);
         movie.setNumberOfHates(0);
 

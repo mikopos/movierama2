@@ -8,14 +8,16 @@ import com.marios.gavriil.movierama2.model.MovieRating;
 import com.marios.gavriil.movierama2.model.MovieRatingKey;
 import com.marios.gavriil.movierama2.model.User;
 import com.marios.gavriil.movierama2.services.interfaces.MovieRatingService;
+import com.marios.gavriil.movierama2.services.interfaces.MovieService;
+import com.marios.gavriil.movierama2.services.interfaces.UserService;
 import org.joda.time.LocalDate;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,14 +32,26 @@ public class MovieRatingServiceImplTest {
     static class UserServiceImplTestContextConfiguration {
 
         @Bean
+        public MovieRatingService movieRatingService() { return new MovieRatingServiceImpl();}
+
+        @Bean
+        public MovieService movieService() { return new MovieServiceImpl();}
+
+        @Bean
+        public UserService userService() { return new UserServiceImpl();}
+
+        @Bean
         public ModelMapper modelMapper() { return new ModelMapper();}
     }
 
-    @MockBean
+    @Autowired
     private MovieRatingService movieRatingService;
 
     @Autowired
     private ModelMapper modelMapper;
+
+
+    @Before
 
     @Test
     public void voteForMovieSuccessfulforLike() throws Exception {
