@@ -2,9 +2,9 @@ spring:
   application:
     name: movierama
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/movierama
+    username: b42899a806506b
+    password: 6b6a4053
+    url: jdbc:mysql://b42899a806506b:6b6a4053@eu-cdbr-west-03.cleardb.net/heroku_a964f6a5b5650b1?reconnect=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: false
