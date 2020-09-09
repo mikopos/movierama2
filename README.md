@@ -22,7 +22,65 @@ Create mySQL database with name 'movierama'
 * Open browser and navigate to ```http:\\localhost:8081```
 
 ###Testing with Postman
+* Sign-up endpoint ```https://movierama2.herokuapp.com/user/registration```
 
+RequestBody : 
+```json
+{
+    "username":"testUser",
+    "password":"testUser123",
+    "matchingPassword":"testUser123",
+    "firstName":"Test",
+    "lastName":"User"
+}
+```
+
+* Add Movie Endpoint ```https://movierama2.herokuapp.com/movie/addMovie```
+
+RequestBody :
+```json
+{
+    "title":"Star Wars",
+    "description":"This is a Star Wars Movie ",
+    "user":{
+        "username":"testUser",
+        "password":"testUser123",
+        "matchingPassword":"testUser123",
+        "firstName":"Test",
+        "lastName":"User"
+    }
+}
+```
+
+* Vote Movie Endpoint ```https://movierama2.herokuapp.com/vote/movie```
+
+RequestBody :
+
+```json
+{
+    "user":{
+        "id":"2",
+        "username":"secondUser",
+        "password":"secondUser321",
+        "matchingPassword":"secondUser321",
+        "firstName":"Second",
+        "lastName":"User"
+    },
+    "movie":{
+        "id":"1",
+        "title":"Star Wars",
+        "description":"This is a Star Wars Movie ",
+        "user":{
+          "username":"testUser",
+          "password":"testUser123",
+          "matchingPassword":"testUser123",
+          "firstName":"Test",
+          "lastName":"User"
+           }
+    },
+    "vote":"true"
+}
+```
 
 ###Built With
 * Java 8
@@ -34,3 +92,7 @@ Create mySQL database with name 'movierama'
 ```https://github.com/mikopos/movierama2/```
 ###Deployed on Heroku
 ```https://movierama2.herokuapp.com/```
+
+###Disclaimer
+
+UI is only for demostration
