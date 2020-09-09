@@ -1,18 +1,219 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+    <style>
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        [class*="col-"] {
+            float: left;
+            padding: 15px;
+        }
+
+        .col-1 {
+            width: 8.33%;
+        }
+
+        .col-2 {
+            width: 16.66%;
+        }
+
+        .col-3 {
+            width: 25%;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .col-5 {
+            width: 41.66%;
+        }
+
+        .col-6 {
+            width: 50%;
+        }
+
+        .col-7 {
+            width: 58.33%;
+        }
+
+        .col-8 {
+            width: 66.66%;
+        }
+
+        .col-9 {
+            width: 75%;
+        }
+
+        .col-10 {
+            width: 83.33%;
+        }
+
+        .col-11 {
+            width: 91.66%;
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px;
+            width: 150px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+        }
+
+        .button1 {
+            border-radius: 2px;
+        }
+
+        .button2 {
+            border-radius: 4px;
+        }
+
+        .button3 {
+            border-radius: 8px;
+        }
+
+        .button4 {
+            border-radius: 12px;
+        }
+
+        .button5 {
+            border-radius: 50%;
+        }
+
+        .loginSignup {
+            text-align: end;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        #newMovie {
+            text-align: end;
+        }
+
+        .movieBox {
+            border-style: solid;
+            margin-top: 2%;
+        }
+
+        .movieTitle {
+            margin-top: 0.2%;
+            margin-bottom: 0.2%;
+            font-size: xx-large;
+            font-weight: bold;
+        }
+
+    </style>
+
     <title>MovieRama</title>
 </head>
 <body>
-<h2>MovieRama</h2>
-<p>Spring Security Thymeleaf tutorial</p>
-<div sec:authorize="hasRole('USER')">Text visible to user.</div>
-<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-<div sec:authorize="isAuthenticated()">Text visible only to
-    authenticated users.</div>
-Authenticated username:
-<div sec:authentication="name"></div>
-Authenticated user roles:
-<div sec:authentication="principal.authorities"></div>
+<div class="row">
+    <div class="col-5">
+        <p>MovieRama</p>
+    </div>
+    <div class="col-6 loginSignup" sec:authorize="!isAuthenticated()">
+        <a href="login.html"> Login </a>
+        <span> or</span>
+        <span>
+            <button class="button button4" onclick="window.location = 'signup'">Sign Up</button>
+        </span>
+    </div>
+    <div class="col-6 loginSignup" sec:authorize="isAuthenticated()">
+        <span> Welcome back, </span>
+        <a href="" sec:authentication="name"></a>
+    </div>
+</div>
+<div class="row">
+    <div class="container" style="background-color:#f1f1f1">
+          <span>Sort by:
+              <a th:data="${movies}" href=""> Like</a> |
+              <a th:action="@{/hates}" href=""> Hate</a> |
+              <a th:action="@{/date}" href=""> Date</a>
+          </span>
+    </div>
+</div>
+        <div class="col-8 movieBox" th:each="movie : ${movies}">
+            <div class="row" th:if="${movies.empty}">
+                <span> No movies available</span>
+            </div>
+            <div class="row movieTitle" th:text="${movie.title}"></div>
+            <div class="row">
+                <span> Posted by </span>
+                <a href="#" th:text="${movie.user.getFirstName()}"></a>
+                <a href="#" th:text="${movie.user.getLastName()}"></a>
+                <span th:text="${movie.publicationDate}"></span>
+            </div>
+            <div class="row" th:text="${movie.description}"></div>
+            <div class="row">
+                <div class="col-6">
+                    <span th:text="${movie.numberOfLikes}"></span> likes |
+                    <span th:text = "${movie.numberOfHates}"></span> hates
+                </div>
+                <div class="col-5 loginSignup" sec:authorize="isAuthenticated()" th:if="${movie.user.getUsername() != #authentication.getName()}">
+                    <form th:action="@{/vote/movie}" method="post">
+                        <div class="container">
+                            <label for="user"></label>
+                            <input type="hidden"  id="user" name="user" required th:value="${user}">
+
+                            <label for="movie"></label>
+                            <input type="hidden"  id="movie" name="movie" required th:value="${movie}">
+
+                            <label for="vote"></label>
+                            <input type="hidden"  id="vote" name="vote" required th:value="true">
+
+                            <div class="clearfix">
+                                <button type="submit" class="signupbtn">Like</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form th:action="@{/vote/movie}" method="post">
+                        <div class="container">
+                            <label for="user"></label>
+                            <input type="hidden"   name="user" required th:value="${user}">
+
+                            <label for="movie"></label>
+                            <input type="hidden"   name="movie" required th:value="${movie}">
+
+                            <label for="vote"></label>
+                            <input type="hidden"   name="vote" required th:value="false">
+
+                            <div class="clearfix">
+                                <button type="submit" class="signupbtn">Hate</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="newMovie" class="col-2" sec:authorize="isAuthenticated()">
+        <span>
+            <button class="button button4" onclick="window.location = 'newMovie'">+ New Movie</button>
+        </span>
+        </div>
+<!--<p>Spring Security Thymeleaf tutorial</p>-->
+<!--<div sec:authorize="hasRole('USER')">Text visible to user.</div>-->
+<!--<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>-->
+<!--<div sec:authorize="isAuthenticated()">Text visible only to-->
+<!--    authenticated users.</div>-->
+<!--Authenticated username:-->
+<!--<div sec:authentication="name"></div>-->
+<!--Authenticated user roles:-->
+<!--<div sec:authentication="principal.authorities"></div>-->
 </body>
 </html>

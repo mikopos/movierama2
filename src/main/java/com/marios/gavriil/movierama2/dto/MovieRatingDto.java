@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class MovieRatingDto {
+public class
+MovieRatingDto {
 
     @NotNull
     @NotEmpty
